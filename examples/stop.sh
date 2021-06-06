@@ -9,6 +9,7 @@ SCRIPT_PATH=$(dirname "$SCRIPT")
 
 # Remove our routes first
 CONTAINER_GW=$(sudo docker inspect "${CONTAINER_NAME}" | jq -r '.[0].NetworkSettings.Networks.bridge.IPAddress')
+# shellcheck disable=SC2153
 for ROUTE in ${ROUTES}
 do
   sudo ip route del "${ROUTE}" via "${CONTAINER_GW}"
