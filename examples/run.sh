@@ -25,3 +25,10 @@ for ROUTE in ${ROUTES}
 do
   sudo ip route add "${ROUTE}" via "${CONTAINER_GW}"
 done
+
+RESOLV_CONFIG=$(grep -v '^nameserver' /etc/resolv.conf | grep -v search)
+ORIGINAL_SEARCH_DOMAINS=$(grep '^search' /etc/resolv.conf)
+NEW_SEARCH_DOMAINS="${ORIGINAL_SEARCH_DOMAINS} ${SEARCH_DOMAINS}"
+NEW_NAMESERVER_CONF='nameserver 127.0.0.1'
+sudo cp /etc/resolv.conf /etc/resolv.conf.orig
+printf "%s\n%s\n%s\n" "${RESOLV_CONFIG}" "${NEW_SEARCH_DOMAINS}" "${NEW_NAMESERVER_CONF}" | sudo tee /etc/resolv.conf &> /dev/null

@@ -17,3 +17,6 @@ done
 
 # Now, let's tear down the container
 sudo docker rm -f "${CONTAINER_NAME}"
+
+# Restore DNS config
+sudo mv -f /etc/resolv.conf.orig /etc/resolv.conf &> /dev/null || true
