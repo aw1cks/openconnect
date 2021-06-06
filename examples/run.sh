@@ -19,6 +19,7 @@ sudo docker run --rm -d \
 docker.io/aw1cks/openconnect
 
 CONTAINER_GW=$(sudo docker inspect "${CONTAINER_NAME}" | jq -r '.[0].NetworkSettings.Networks.bridge.IPAddress')
+# shellcheck disable=SC2153
 for ROUTE in ${ROUTES}
 do
   sudo ip route add "${ROUTE}" via "${CONTAINER_GW}"
