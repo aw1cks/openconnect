@@ -1,0 +1,15 @@
+#!/bin/sh
+CONTAINER_NAME='vpn'
+URL='anyconnect.mydomain.com'
+USER='jdoe'
+AUTH_GROUP='mygroup'
+PASS='reallysecurepassword123'
+# Set the below if you need to specify OTP
+# you can use a tool like pass-otp for this
+# e.g. :
+# OTP="$(pass otp my/secret/key)"
+SEARCH_DOMAINS='corporate-domain.com domain2.corporate-domain.com'
+# Subnets you want to route via the VPN (CIDR format)
+# Set to 0.0.0.0/0 to route all traffic
+# If adding multiple routes, add a space between them
+ROUTES='10.0.0.0/8 172.12.0.0/12'

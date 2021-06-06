@@ -1,0 +1,27 @@
+---
+
+stages:
+  - Shellcheck
+  - Build
+
+shellcheck:
+  stage: Shellcheck
+  image:
+    name: docker.io/koalaman/shellcheck:stable
+    entrypoint: [""]
+  script:
+    - for SCRIPT in entrypoint.sh env/*.sh; do shellcheck -x $SCRIPT; done
+
+build:
+  stage: Build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"username\":\"${CI_REGISTRY_USER}\",\"password\":\"${CI_REGISTRY_PASSWORD}\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor \
+      --context="${CI_PROJECT_DIR}" \
+      --dockerfile 'Dockerfile' \
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" \
+      --destination "${CI_REGISTRY_IMAGE}:latest"
