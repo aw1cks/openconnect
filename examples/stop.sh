@@ -19,4 +19,4 @@ done
 sudo docker rm -f "${CONTAINER_NAME}"
 
 # Restore DNS config
-sudo mv -f /etc/resolv.conf.orig /etc/resolv.conf &> /dev/null || true
+sudo mv -f /etc/resolv.conf.orig /etc/resolv.conf > /dev/null 2>&1 || true

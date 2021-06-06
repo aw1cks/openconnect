@@ -31,4 +31,4 @@ ORIGINAL_SEARCH_DOMAINS=$(grep '^search' /etc/resolv.conf)
 NEW_SEARCH_DOMAINS="${ORIGINAL_SEARCH_DOMAINS} ${SEARCH_DOMAINS}"
 NEW_NAMESERVER_CONF='nameserver 127.0.0.1'
 sudo cp /etc/resolv.conf /etc/resolv.conf.orig
-printf "%s\n%s\n%s\n" "${RESOLV_CONFIG}" "${NEW_SEARCH_DOMAINS}" "${NEW_NAMESERVER_CONF}" | sudo tee /etc/resolv.conf &> /dev/null
+printf "%s\n%s\n%s\n" "${RESOLV_CONFIG}" "${NEW_SEARCH_DOMAINS}" "${NEW_NAMESERVER_CONF}" | sudo tee /etc/resolv.conf > /dev/null 2>&1 
