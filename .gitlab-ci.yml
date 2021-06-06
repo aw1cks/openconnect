@@ -7,7 +7,7 @@ stages:
 shellcheck:
   stage: Shellcheck
   image:
-    name: docker.io/koalaman/shellcheck:stable
+    name: docker.io/koalaman/shellcheck-alpine:stable
     entrypoint: [""]
   script:
     - for SCRIPT in entrypoint.sh env/*.sh; do shellcheck -x $SCRIPT; done
