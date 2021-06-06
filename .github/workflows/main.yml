@@ -11,7 +11,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: actions/checkout@v2
+      - name: Run Shellcheck
+        uses: ludeeus/action-shellcheck@master
   docker:
+    name: Docker Build
     runs-on: ubuntu-latest
     steps:
       - name: QEMU
