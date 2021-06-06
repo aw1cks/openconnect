@@ -4,6 +4,7 @@ set -e
 
 SCRIPT=$(readlink -f "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
+# shellcheck disable=SC1091
 . "${SCRIPT_PATH}/env"
 
 # Remove our routes first
