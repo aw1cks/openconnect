@@ -3,17 +3,16 @@ LABEL maintainer='Alex Wicks <alex@awicks.io>'
 
 # BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
 # COMMIT_SHA="$(git rev-parse HEAD 2>/dev/null || echo 'null')"
-ARG BUILD_DATE
-ARG COMMIT_SHA
+ARG BUILD_DATE COMMIT_SHA
 
 # http://label-schema.org/rc1/
 LABEL org.label-schema.schema-version='1.0' \
-LABEL org.label-schema.name='anyconnect-docker' \
-LABEL org.label-schema.build-date="${BUILD_DATE}" \
-LABEL org.label-schema.description='AnyConnect-compatible client to route host traffic' \
-LABEL org.label-schema.version='1.0' \
-LABEL org.label-schema.vcs-url='https://github.com/aw1cks/anyconnect-docker' \
-LABEL org.label-schema.vcs-ref="${COMMIT_SHA}"
+      org.label-schema.name='anyconnect-docker' \
+      org.label-schema.build-date="${BUILD_DATE}" \
+      org.label-schema.description='AnyConnect-compatible client to route host traffic' \
+      org.label-schema.version='1.0' \
+      org.label-schema.vcs-url='https://github.com/aw1cks/anyconnect-docker' \
+      org.label-schema.vcs-ref="${COMMIT_SHA}"
 LABEL org.label-schema.docker.cmd='\
 docker run -d \
 --cap-add NET-ADMIN \

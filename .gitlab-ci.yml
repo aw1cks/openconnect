@@ -15,8 +15,11 @@ shellcheck:
 build:
   stage: Build
   image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
+    name: docker.io/docker:stable
+  services:
+    - docker:dind
   script:
-    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"username\":\"${CI_REGISTRY_USER}\",\"password\":\"${CI_REGISTRY_PASSWORD}\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" --destination "${CI_REGISTRY_IMAGE}:latest"
+    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}"
+    - docker build -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" -t "${CI_REGISTRY_IMAGE}:latest" .
+    - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
+    - docker push "${CI_REGISTRY_IMAGE}:latest"
