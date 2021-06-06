@@ -20,6 +20,8 @@ jobs:
         uses: ludeeus/action-shellcheck@master
   docker:
     name: Docker Build
+    needs:
+      - shellcheck
     runs-on: ubuntu-latest
     steps:
       - name: QEMU
