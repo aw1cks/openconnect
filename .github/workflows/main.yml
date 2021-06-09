@@ -49,7 +49,7 @@ jobs:
       - name: Login to quay.io
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
+          registry: quay.io
           username: ${{ github.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
           
