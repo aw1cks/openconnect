@@ -6,6 +6,18 @@ OpenConnect doesn't ship with any init scripts or systemd units.
 It's also not easy to non-interactively provide username, password and especially OTP.
 Additionally, running in a docker container gives some extra flexibility with routing.
 
+## Where can I download it?
+
+The image is built by GitHub Actions for amd64 & arm64 and pushed to the following repositories:
+
+ - [Docker Hub](https://hub.docker.com/r/aw1cks/openconnect)
+ - [GitHub Container Registry](https://github.com/users/aw1cks/packages/container/package/openconnect)
+ - [quay.io](https://quay.io/repository/aw1cks/openconnect)
+
+ There is additionally a build running in GitLab CI published to:
+
+ - [GitLab](https://gitlab.com/aw1cks/openconnect/container_registry/2011097)
+
 ## How do I use it?
 
 It's recommended to use the helper scripts [as described below](#helper-scripts).
