@@ -1,4 +1,4 @@
-# OpenConnect Docker container
+# OpenConnect Docker Container
 
 ## Why?
 
@@ -6,32 +6,59 @@ OpenConnect doesn't ship with any init scripts or systemd units.
 It's also not easy to non-interactively provide username, password and especially OTP.
 Additionally, running in a docker container gives some extra flexibility with routing.
 
-## Example usage
+## How do I use it?
 
-To run the container:
+It's recommended to use the helper scripts [as described below](#helper-scripts).
+
+Otherwise, you can run the container using the specified arguments below.
+
+### Basic container command
 
 ```shell
 docker run -d \
 --cap-add NET-ADMIN \
--e URL=https://myvpn.com/anyconnect \
+-e URL=https://my.vpn.com \
 -e USER=myuser \
 -e AUTH_GROUP=mygroup \
 -e PASS=mypassword \
 -e OTP=123456 \
--e EXTRA_ARGS="--protocol=anyconnect" \
 -e SEARCH_DOMAINS="my.corporate-domain.com subdomain.my.corporate-domain.com" \
 docker.io/aw1cks/openconnect'
 ```
 
+### All container arguments
+
+| Variable         | Explanation                                                                                                                                  | Example Value                                               |
+|------------------|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| `URL`            | URL of AnyConnect VPN                                                                                                                        | `https://my.vpn.com`                                        |
+| `USER`           | User to authenticate with                                                                                                                    | `myuser`                                                    |
+| `AUTH_GROUP`     | Authentication Group to use when connecting to VPN (optional)                                                                                | `mygroup`                                                   |
+| `PASS`           | Password to authenticate with                                                                                                                | `mypassword`                                                |
+| `OTP`            | OTP/2FA code (optional)                                                                                                                      | `123456`                                                    |
+| `SEARCH_DOMAINS` | Search domains to use. DNS for these domains will be routed via the VPN's DNS servers (optional). Separate with a space for multiple domains | `my.corporate-domain.com subdomain.my.corporate-domain.com` |
+| `EXTRA_ARGS`     | Any additional arguments to be passed to the OpenConnect client (optional). Only use this if you need something specific                     | `--verbose`                                                 |
+
+## Helper scripts
+
 The provided helper scripts in `examples/` will create the container for you and set up the routing table appropriately.
 
-The helper scripts have the following requirements:
+### Requirements
  - `docker`
  - `sudo` (and permissions to run `ip` and `docker` as root)
  - `iproute2`
  - `jq`
 
-To use the helper scripts, do the following:
+### How do they work?
+
+1. The `env` file is sourced from the same directory the script lives in
+2. From the above file, all the container arguments are derived. These are passed using `-e` as environment variables to the container.
+3. The container is spawned, then the address of the container is found using `docker inspect` piped to `jq`.
+4. The routes specified in the `env` file are added to the **host** routing table, via the container address discovered in the previous step.
+5. The host resolv.conf is backed up to `/etc/resolv.conf.orig`, then modified to point to the local container on `127.0.0.1`.
+
+The script which stops the VPN cleans up the routing table, tears down the container, and restores the original `resolv.conf`.
+
+### How do I use them?
 
 ```shell
 $ cd $(git rev-parse --show-cdup)
@@ -64,3 +91,4 @@ When running not in privileged mode, OpenConnect gives errors such as this:
 This is normal and does not impact the operation of the VPN.
 
 To suppress these errors, run with `--privileged`.
+
