@@ -1,5 +1,8 @@
 # OpenConnect Docker Container
 
+![github](https://github.com/aw1cks/openconnect/actions/workflows/main.yml/badge.svg)
+![gitlab](https://gitlab.com/aw1cks/openconnect/badges/master/pipeline.svg)
+
 ## Why?
 
 OpenConnect doesn't ship with any init scripts or systemd units.
