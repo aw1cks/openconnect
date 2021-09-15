@@ -13,3 +13,5 @@ SEARCH_DOMAINS='corporate-domain.com domain2.corporate-domain.com'
 # Set to 0.0.0.0/0 to route all traffic
 # If adding multiple routes, add a space between them
 ROUTES='10.0.0.0/8 172.12.0.0/12'
+# Set extra openconnect arguments if needed
+# EXTRA_ARGS=''

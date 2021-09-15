@@ -17,6 +17,7 @@ sudo docker run --rm -d \
 -e PASS="${PASS}" \
 -e OTP="${OTP}" \
 -e SEARCH_DOMAINS="${SEARCH_DOMAINS}" \
+-e EXTRA_ARGS="${EXTRA_ARGS}" \
 docker.io/aw1cks/openconnect
 
 CONTAINER_GW=$(sudo docker inspect "${CONTAINER_NAME}" | jq -r '.[0].NetworkSettings.Networks.bridge.IPAddress')
