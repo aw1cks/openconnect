@@ -31,7 +31,7 @@ Otherwise, you can run the container using the specified arguments below.
 
 ```shell
 docker run -d \
---cap-add NET-ADMIN \
+--cap-add NET_ADMIN \
 -e URL=https://my.vpn.com \
 -e USER=myuser \
 -e AUTH_GROUP=mygroup \
